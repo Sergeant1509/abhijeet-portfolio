@@ -4,18 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skills | Abhijeet</title>
-<!-- FAVICON & PWA ICONS -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#ef4444">
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#ef4444">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -26,12 +22,14 @@
       --text: #fff;
       --muted: #aaa;
       --accent: #ef4444;
+      --card: #0f0f0f;
     }
 
     body.light {
       --bg: #f9fafb;
       --text: #111;
       --muted: #555;
+      --card: #fff;
     }
 
     * {
@@ -44,6 +42,7 @@
     body {
       background: var(--bg);
       color: var(--text);
+      padding-top: 72px;
       transition: 0.3s;
     }
 
@@ -52,6 +51,7 @@
       position: fixed;
       top: 0;
       width: 100%;
+      height: 72px;
       z-index: 1000;
       display: flex;
       justify-content: space-between;
@@ -65,30 +65,76 @@
       color: var(--muted);
       text-decoration: none;
       font-weight: 500;
-      transition: 0.3s;
     }
 
-    nav a:hover,
-    nav a.active {
+    nav a.active,
+    nav a:hover {
       color: var(--accent);
     }
 
     .theme-toggle {
-      margin-left: 25px;
-      background: transparent;
       border: 1px solid var(--accent);
       color: var(--accent);
+      background: transparent;
       padding: 8px 12px;
       border-radius: 50%;
       cursor: pointer;
+      margin-left: 15px;
     }
 
-    .theme-toggle:hover {
-      background: var(--accent);
-      color: #fff;
+    .menu-btn {
+      display: none;
+      font-size: 1.6rem;
+      color: var(--accent);
+      cursor: pointer;
+      margin-left: 15px;
     }
 
-    /* SKILLS SECTION */
+    /* DRAWER */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100vh;
+      background: var(--bg);
+      padding: 80px 30px;
+      transition: 0.4s ease;
+      z-index: 2000;
+    }
+
+    .drawer.active {
+      right: 0;
+    }
+
+    .drawer a {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .drawer a:hover {
+      color: var(--accent);
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 1500;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* SKILLS */
     .skills {
       min-height: 100vh;
       padding: 140px 8% 80px;
@@ -97,18 +143,17 @@
     .skills h1 {
       text-align: center;
       font-size: 3rem;
-      margin-bottom: 10px;
     }
 
     .skills h1 span {
       color: var(--accent);
     }
 
-    .skills p.subtitle {
+    .subtitle {
       text-align: center;
       color: var(--muted);
       max-width: 600px;
-      margin: 0 auto 60px;
+      margin: 15px auto 60px;
       line-height: 1.6;
     }
 
@@ -121,7 +166,7 @@
     }
 
     .skill-card {
-      background: #0f0f0f;
+      background: var(--card);
       border: 1px solid rgba(239,68,68,0.3);
       border-radius: 18px;
       padding: 30px;
@@ -131,10 +176,6 @@
     .skill-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 0 35px rgba(239,68,68,0.4);
-    }
-
-    body.light .skill-card {
-      background: #fff;
     }
 
     .skill-card i {
@@ -155,22 +196,16 @@
       font-size: 0.95rem;
     }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-      }
-
-      .skills h1 {
-        font-size: 2.3rem;
-      }
+    @media (max-width: 900px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .skills h1 { font-size: 2.3rem; }
     }
   </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header>
   <img src="/hero.png" width="90" alt="logo">
 
@@ -183,34 +218,46 @@
     <a href="/contact.html">Contact</a>
   </nav>
 
-  <button id="themeToggle" class="theme-toggle">
-    <i class="fa-solid fa-moon"></i>
-  </button>
+  <div>
+    <button id="themeToggle" class="theme-toggle">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <i class="fa-solid fa-bars menu-btn" onclick="toggleDrawer()"></i>
+  </div>
 </header>
 
-<!-- SKILLS -->
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <a href="/index.html" onclick="toggleDrawer()">Home</a>
+  <a href="/services.html" onclick="toggleDrawer()">Services</a>
+  <a href="/skills.html" onclick="toggleDrawer()">Skills</a>
+  <a href="/education.html" onclick="toggleDrawer()">Education</a>
+  <a href="/experience.html" onclick="toggleDrawer()">Experience</a>
+  <a href="/contact.html" onclick="toggleDrawer()">Contact</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
 <section class="skills">
   <h1>My <span>Skills</span></h1>
   <p class="subtitle">
-    I focus on building strong fundamentals, learning by doing, and continuously improving
-    through real-world projects.
+    I focus on building strong fundamentals, learning by doing,
+    and continuously improving through real-world projects.
   </p>
 
   <div class="skills-grid">
 
-    <!-- Programming -->
     <div class="skill-card">
       <i class="fa-solid fa-code"></i>
       <h3>Programming Fundamentals</h3>
       <ul>
         <li>✔ C / C++ (Basics)</li>
-        <li>✔ Java (Core concepts)</li>
+        <li>✔ Java (Core)</li>
         <li>✔ Python (Beginner–Intermediate)</li>
         <li>✔ Problem-solving mindset</li>
       </ul>
     </div>
 
-    <!-- Web -->
     <div class="skill-card">
       <i class="fa-solid fa-globe"></i>
       <h3>Web Development</h3>
@@ -218,23 +265,21 @@
         <li>✔ HTML5, CSS3</li>
         <li>✔ JavaScript (Basics)</li>
         <li>✔ Responsive design</li>
-        <li>✔ Portfolio & business websites</li>
+        <li>✔ Portfolio & business sites</li>
       </ul>
     </div>
 
-    <!-- App -->
     <div class="skill-card">
       <i class="fa-solid fa-mobile-screen"></i>
       <h3>App Development</h3>
       <ul>
         <li>✔ Flutter (Beginner)</li>
-        <li>✔ Android app structure</li>
+        <li>✔ Android structure</li>
         <li>✔ Firebase basics</li>
-        <li>✔ UI-focused development</li>
+        <li>✔ UI-focused apps</li>
       </ul>
     </div>
 
-    <!-- AI -->
     <div class="skill-card">
       <i class="fa-solid fa-brain"></i>
       <h3>Artificial Intelligence</h3>
@@ -242,39 +287,44 @@
         <li>✔ AI concepts & agents</li>
         <li>✔ Chatbot logic</li>
         <li>✔ Automation ideas</li>
-        <li>✔ Strong interest in vision & context-aware AI</li>
+        <li>✔ Vision & context AI interest</li>
       </ul>
     </div>
 
-    <!-- Tools -->
     <div class="skill-card">
       <i class="fa-solid fa-toolbox"></i>
       <h3>Tools & Workflow</h3>
       <ul>
         <li>✔ Git & GitHub</li>
         <li>✔ VS Code</li>
-        <li>✔ Basic Linux commands</li>
+        <li>✔ Linux basics</li>
         <li>✔ Project-based learning</li>
       </ul>
     </div>
 
-    <!-- Soft -->
     <div class="skill-card">
       <i class="fa-solid fa-user-gear"></i>
       <h3>Soft Skills</h3>
       <ul>
         <li>✔ Logical thinking</li>
-        <li>✔ Self-learning ability</li>
+        <li>✔ Self-learning</li>
         <li>✔ Problem analysis</li>
-        <li>✔ Startup & product mindset</li>
+        <li>✔ Product mindset</li>
       </ul>
     </div>
 
   </div>
 </section>
 
-<!-- SCRIPT -->
 <script>
+  const drawer = document.getElementById("drawer");
+  const overlay = document.getElementById("overlay");
+
+  function toggleDrawer() {
+    drawer.classList.toggle("active");
+    overlay.classList.toggle("active");
+  }
+
   const toggle = document.getElementById("themeToggle");
   const icon = toggle.querySelector("i");
 
