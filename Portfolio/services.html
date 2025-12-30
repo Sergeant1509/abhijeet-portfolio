@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Services | Abhijeet</title>
 
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#ef4444">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -28,13 +36,16 @@
     body {
       background: var(--bg);
       color: var(--text);
-      transition: background 0.3s ease, color 0.3s ease;
+      padding-top: 72px;
+      transition: 0.3s;
     }
 
+    /* HEADER */
     header {
       position: fixed;
       top: 0;
       width: 100%;
+      height: 72px;
       z-index: 1000;
       display: flex;
       justify-content: space-between;
@@ -48,29 +59,78 @@
       color: var(--muted);
       text-decoration: none;
       font-weight: 500;
-      transition: 0.3s;
     }
 
-    nav a:hover,
-    nav a.active {
+    nav a.active,
+    nav a:hover {
       color: var(--accent);
     }
 
     .theme-toggle {
-      margin-left: 25px;
-      background: transparent;
       border: 1px solid var(--accent);
       color: var(--accent);
+      background: transparent;
       padding: 8px 12px;
       border-radius: 50%;
       cursor: pointer;
+      margin-left: 15px;
     }
 
-    .theme-toggle:hover {
-      background: var(--accent);
-      color: #fff;
+    /* HAMBURGER */
+    .menu-btn {
+      display: none;
+      font-size: 1.6rem;
+      color: var(--accent);
+      cursor: pointer;
+      margin-left: 15px;
     }
 
+    /* DRAWER */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100vh;
+      background: var(--bg);
+      padding: 80px 30px;
+      transition: 0.4s ease;
+      z-index: 2000;
+    }
+
+    .drawer.active {
+      right: 0;
+    }
+
+    .drawer a {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .drawer a:hover {
+      color: var(--accent);
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 1500;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* PRICING CARDS */
     .pricing-card {
       background: #0f0f0f;
       border-radius: 1.5rem;
@@ -106,7 +166,7 @@
       color: #ef4444;
       font-weight: 600;
       border-radius: 0.5rem;
-      transition: all 0.3s;
+      transition: 0.3s;
     }
 
     .pricing-card button:hover {
@@ -121,21 +181,17 @@
 
     .featured {
       background: linear-gradient(135deg, #7f1d1d, #000);
-      border-color: #ef4444;
     }
 
-    body.light #services {
-      background: #f9fafb;
-      color: #111;
-    }
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav {
+        display: none;
+      }
 
-    body.light .pricing-card {
-      background: white;
-      color: #111;
-    }
-
-    body.light .pricing-card ul {
-      color: #374151;
+      .menu-btn {
+        display: block;
+      }
     }
   </style>
 </head>
@@ -144,6 +200,7 @@
 
 <header>
   <img src="/hero.png" width="90" alt="logo">
+
   <nav>
     <a href="/index.html">Home</a>
     <a href="/services.html" class="active">Services</a>
@@ -152,20 +209,36 @@
     <a href="/experience.html">Experience</a>
     <a href="/contact.html">Contact</a>
   </nav>
-  <button onclick="toggleTheme()" class="theme-toggle">
-    <i class="fa-solid fa-moon"></i>
-  </button>
+
+  <div>
+    <button onclick="toggleTheme()" class="theme-toggle">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <i class="fa-solid fa-bars menu-btn" onclick="toggleDrawer()"></i>
+  </div>
 </header>
 
-<div class="fixed top-24 right-6 z-50">
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <a href="/index.html">Home</a>
+  <a href="/services.html">Services</a>
+  <a href="/skills.html">Skills</a>
+  <a href="/education.html">Education</a>
+  <a href="/experience.html">Experience</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
+<!-- CURRENCY TOGGLE -->
+<div class="fixed top-24 right-6 z-40">
   <button onclick="toggleCurrency()"
     class="px-4 py-2 bg-black text-white rounded-md font-semibold border border-red-600">
     ₹ / $
   </button>
 </div>
 
-<section id="services"
-  class="min-h-screen bg-black text-white px-6 pt-44 pb-24 transition-all duration-500">
+<section id="services" class="min-h-screen px-6 pt-32 pb-24">
 
   <div class="text-center max-w-4xl mx-auto">
     <h2 class="text-sm uppercase tracking-widest text-red-500 font-semibold">
@@ -181,7 +254,6 @@
 
   <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
 
-    <!-- WEB -->
     <div class="pricing-card glow">
       <h3>Web Development</h3>
       <p class="price" data-inr="15000" data-usd="199">₹15,000</p>
@@ -191,12 +263,9 @@
         <li>✔ SEO Friendly</li>
         <li>✔ Deployment Support</li>
       </ul>
-      <button onclick="sendWhatsApp('Web Development', '15000')">
-        Get Started
-      </button>
+      <button onclick="sendWhatsApp('Web Development','15000')">Get Started</button>
     </div>
 
-    <!-- APP -->
     <div class="pricing-card glow featured">
       <h3>App Development</h3>
       <p class="price" data-inr="35000" data-usd="449">₹35,000</p>
@@ -206,12 +275,9 @@
         <li>✔ Firebase / Backend</li>
         <li>✔ Play Store Ready</li>
       </ul>
-      <button onclick="sendWhatsApp('App Development', '35000')">
-        Get Started
-      </button>
+      <button onclick="sendWhatsApp('App Development','35000')">Get Started</button>
     </div>
 
-    <!-- AI -->
     <div class="pricing-card glow">
       <h3>AI Solutions</h3>
       <p class="price" data-inr="60000" data-usd="749">₹60,000</p>
@@ -221,53 +287,35 @@
         <li>✔ Vision / NLP</li>
         <li>✔ Custom Logic</li>
       </ul>
-      <button onclick="sendWhatsApp('AI Solutions', '60000')">
-        Get Started
-      </button>
+      <button onclick="sendWhatsApp('AI Solutions','60000')">Get Started</button>
     </div>
 
   </div>
-
-  <div class="mt-28 text-center">
-    <h2 class="text-3xl font-bold">Have a custom idea in mind?</h2>
-    <p class="mt-4 text-gray-400 text-lg">
-      Let’s build something powerful together.
-    </p>
-    <a href="/contact.html"
-      class="inline-block mt-8 px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition">
-      Contact Me
-    </a>
-  </div>
-
 </section>
 
 <script>
-  let currency = "INR";
-
-  function toggleCurrency() {
-    document.querySelectorAll(".price").forEach(p => {
-      currency = currency === "INR" ? "USD" : "INR";
-      p.textContent = currency === "INR"
-        ? "₹" + p.dataset.inr
-        : "$" + p.dataset.usd;
-    });
+  function toggleDrawer() {
+    document.getElementById("drawer").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
   }
 
   function toggleTheme() {
     document.body.classList.toggle("light");
   }
 
-  function sendWhatsApp(service, price) {
-    const phoneNumber = "916306799173";
-    const message =
-      `Hello Abhijeet 👋%0A%0A` +
-      `I came across your portfolio and I’m interested in your ${service} service.%0A%0A` +
-      `📦 Selected Package: ${service}%0A` +
-      `💰 Quoted Price: ₹${price}%0A%0A` +
-      `I’d like to discuss my requirements and understand the next steps.%0A` +
-      `Looking forward to your response.`;
+  let currency = "INR";
+  function toggleCurrency() {
+    document.querySelectorAll(".price").forEach(p => {
+      currency = currency === "INR" ? "USD" : "INR";
+      p.textContent = currency === "INR" ? "₹" + p.dataset.inr : "$" + p.dataset.usd;
+    });
+  }
 
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  function sendWhatsApp(service, price) {
+    window.open(
+      `https://wa.me/916306799173?text=Hello Abhijeet 👋%0A%0AI’m interested in your ${service} service.%0AQuoted Price: ₹${price}%0ALet’s discuss the next steps.`,
+      "_blank"
+    );
   }
 </script>
 
