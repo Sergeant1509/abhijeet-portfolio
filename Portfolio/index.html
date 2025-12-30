@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>home</title>
+  <!-- FAVICON & PWA ICONS -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ef4444">
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    /* =====================
+       THEME VARIABLES
+    ===================== */
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --muted: #aaa;
+      --accent: #ef4444;
+    }
+
+    body.light {
+      --bg: #f9fafb;
+      --text: #111;
+      --muted: #555;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* =====================
+       HEADER
+    ===================== */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: var(--bg);
+    }
+
+    nav a {
+      margin-left: 22px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent);
+    }
+
+    .theme-toggle {
+      margin-left: 25px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* =====================
+       HOME SECTION
+    ===================== */
+    .home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      gap: 70px;
+      padding: 140px 8% 60px;
+    }
+
+    .home-img img {
+      width: 320px;
+      border-radius: 50%;
+      border: 4px solid var(--accent);
+    }
+
+    /* ❌ NO GLOW ON IMAGE */
+    .home-img img:hover {
+      box-shadow: none;
+      transform: none;
+    }
+
+    .home-content h1 {
+      font-size: 3rem;
+    }
+
+    .home-content h1 span {
+      color: var(--accent);
+    }
+
+    .typing-text {
+      margin-top: 12px;
+      font-size: 1.6rem;
+      color: var(--muted);
+    }
+
+    .typing-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .home-content p {
+      margin: 22px 0;
+      max-width: 520px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .social-icons a {
+      display: inline-block;
+      margin-right: 18px;
+      font-size: 1.6rem;
+      color: var(--muted);
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 12px 34px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #dc2626;
+    }
+
+    /* =====================
+       SCROLL REVEAL
+    ===================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =====================
+       MOBILE OPTIMIZATION
+    ===================== */
+    @media (max-width: 900px) {
+      nav {
+        display: none;
+      }
+
+      .home {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .home-img img {
+        width: 260px;
+      }
+
+      .home-content h1 {
+        font-size: 2.3rem;
+      }
+
+      .typing-text {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+<link rel="apple-touch-icon" href="/hero.png">
+<meta name="theme-color" content="#ef4444">
+
+</head>
+
+<body>
+
+<header>
+  <img src="/hero.png" width="90" alt="logo">
+
+  <nav>
+    <a href="/index.html" class="active">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/skills.html">Skills</a>
+    <a href="/education.html">Education</a>
+    <a href="/experience.html">Experience</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+
+  <button id="themeToggle" class="theme-toggle">
+    <i class="fa-solid fa-moon"></i>
+  </button>
+</header>
+
+<section class="home">
+  <div class="home-img reveal">
+    <img src="main.jpg" alt="Abhijeet">
+  </div>
+
+  <div class="home-content reveal">
+    <h1>Hi, I'm <span>Abhijeet</span></h1>
+
+    <h3 class="typing-text">
+      I'm a <span id="typing"></span>
+    </h3>
+
+    <p>
+      A developer focused on building clean, scalable, and practical digital solutions.
+      I turn ideas into real products and grow through real-world projects.
+    </p>
+
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/abhijeet-gautam1509/" target="_blank">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/Sergeant1509" target="_blank">
+        <i class="fa-brands fa-github"></i>
+      </a>
+    </div>
+
+    <a href="javascript:void(0)" onclick="hireMe()" class="btn">Hire Me</a>
+  </div>
+</section>
+
+<!-- =====================
+     SCRIPTS
+===================== -->
+<script>
+  /* Typing Effect */
+  const roles = ["Developer", "Web Developer", "App Developer", "AI Enthusiast"];
+  let i = 0, j = 0, deleting = false;
+
+  function typingEffect() {
+    const text = roles[i];
+    const el = document.getElementById("typing");
+
+    el.textContent = deleting ? text.substring(0, j--) : text.substring(0, j++);
+
+    if (!deleting && j === text.length) {
+      setTimeout(() => deleting = true, 1200);
+    } else if (deleting && j === 0) {
+      deleting = false;
+      i = (i + 1) % roles.length;
+    }
+
+    setTimeout(typingEffect, deleting ? 60 : 100);
+  }
+  typingEffect();
+
+  /* Scroll Reveal */
+  const reveals = document.querySelectorAll(".reveal");
+  function revealOnScroll() {
+    reveals.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  }
+  window.addEventListener("scroll", revealOnScroll);
+  revealOnScroll();
+
+  /* Theme Toggle */
+  const toggle = document.getElementById("themeToggle");
+  const icon = toggle.querySelector("i");
+
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light");
+    icon.classList.replace("fa-moon", "fa-sun");
+  }
+
+  toggle.onclick = () => {
+    document.body.classList.toggle("light");
+    const light = document.body.classList.contains("light");
+    localStorage.setItem("theme", light ? "light" : "dark");
+    icon.classList.toggle("fa-moon");
+    icon.classList.toggle("fa-sun");
+  };
+</script>
+<script>
+  function hireMe() {
+    const phoneNumber = "916306799173"; // your WhatsApp number
+
+    const message =
+      `Hello Abhijeet 👋🏻%0A%0A` +
+      `I visited your portfolio and I’m interested in hiring you for a development project.%0A%0A` +
+      `I’d like to discuss my requirements, timeline, and next steps.%0A` +
+      `Please let me know a good time to connect.`;
+
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  }
+</script>
+</body>
+</html>

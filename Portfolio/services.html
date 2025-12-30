@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Abhijeet</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --muted: #aaa;
+      --accent: #ef4444;
+    }
+
+    body.light {
+      --bg: #f9fafb;
+      --text: #111;
+      --muted: #555;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: var(--bg);
+    }
+
+    nav a {
+      margin-left: 22px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent);
+    }
+
+    .theme-toggle {
+      margin-left: 25px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .pricing-card {
+      background: #0f0f0f;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      border: 1px solid rgba(220,38,38,0.3);
+      transition: all 0.4s ease;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ef4444;
+    }
+
+    .pricing-card .price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 1rem 0;
+    }
+
+    .pricing-card ul {
+      margin-top: 1.5rem;
+      color: #d1d5db;
+      line-height: 2;
+    }
+
+    .pricing-card button {
+      margin-top: 2rem;
+      width: 100%;
+      padding: 0.8rem;
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+
+    .pricing-card button:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    .glow:hover {
+      box-shadow: 0 0 40px rgba(220,38,38,0.6);
+      transform: translateY(-8px);
+    }
+
+    .featured {
+      background: linear-gradient(135deg, #7f1d1d, #000);
+      border-color: #ef4444;
+    }
+
+    body.light #services {
+      background: #f9fafb;
+      color: #111;
+    }
+
+    body.light .pricing-card {
+      background: white;
+      color: #111;
+    }
+
+    body.light .pricing-card ul {
+      color: #374151;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="/hero.png" width="90" alt="logo">
+  <nav>
+    <a href="/index.html">Home</a>
+    <a href="/services.html" class="active">Services</a>
+    <a href="/skills.html">Skills</a>
+    <a href="/education.html">Education</a>
+    <a href="/experience.html">Experience</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+  <button onclick="toggleTheme()" class="theme-toggle">
+    <i class="fa-solid fa-moon"></i>
+  </button>
+</header>
+
+<div class="fixed top-24 right-6 z-50">
+  <button onclick="toggleCurrency()"
+    class="px-4 py-2 bg-black text-white rounded-md font-semibold border border-red-600">
+    ₹ / $
+  </button>
+</div>
+
+<section id="services"
+  class="min-h-screen bg-black text-white px-6 pt-44 pb-24 transition-all duration-500">
+
+  <div class="text-center max-w-4xl mx-auto">
+    <h2 class="text-sm uppercase tracking-widest text-red-500 font-semibold">
+      Services & Pricing
+    </h2>
+    <h1 class="mt-4 text-4xl sm:text-5xl font-bold">
+      High-Impact Development Services
+    </h1>
+    <p class="mt-6 text-gray-400 text-lg">
+      Transparent pricing. Real results. Built for scale.
+    </p>
+  </div>
+
+  <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+
+    <!-- WEB -->
+    <div class="pricing-card glow">
+      <h3>Web Development</h3>
+      <p class="price" data-inr="15000" data-usd="199">₹15,000</p>
+      <ul>
+        <li>✔ Portfolio / Business Website</li>
+        <li>✔ Responsive Design</li>
+        <li>✔ SEO Friendly</li>
+        <li>✔ Deployment Support</li>
+      </ul>
+      <button onclick="sendWhatsApp('Web Development', '15000')">
+        Get Started
+      </button>
+    </div>
+
+    <!-- APP -->
+    <div class="pricing-card glow featured">
+      <h3>App Development</h3>
+      <p class="price" data-inr="35000" data-usd="449">₹35,000</p>
+      <ul>
+        <li>✔ Android / iOS (Flutter)</li>
+        <li>✔ API Integration</li>
+        <li>✔ Firebase / Backend</li>
+        <li>✔ Play Store Ready</li>
+      </ul>
+      <button onclick="sendWhatsApp('App Development', '35000')">
+        Get Started
+      </button>
+    </div>
+
+    <!-- AI -->
+    <div class="pricing-card glow">
+      <h3>AI Solutions</h3>
+      <p class="price" data-inr="60000" data-usd="749">₹60,000</p>
+      <ul>
+        <li>✔ AI Automation</li>
+        <li>✔ Chatbots / Agents</li>
+        <li>✔ Vision / NLP</li>
+        <li>✔ Custom Logic</li>
+      </ul>
+      <button onclick="sendWhatsApp('AI Solutions', '60000')">
+        Get Started
+      </button>
+    </div>
+
+  </div>
+
+  <div class="mt-28 text-center">
+    <h2 class="text-3xl font-bold">Have a custom idea in mind?</h2>
+    <p class="mt-4 text-gray-400 text-lg">
+      Let’s build something powerful together.
+    </p>
+    <a href="/contact.html"
+      class="inline-block mt-8 px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition">
+      Contact Me
+    </a>
+  </div>
+
+</section>
+
+<script>
+  let currency = "INR";
+
+  function toggleCurrency() {
+    document.querySelectorAll(".price").forEach(p => {
+      currency = currency === "INR" ? "USD" : "INR";
+      p.textContent = currency === "INR"
+        ? "₹" + p.dataset.inr
+        : "$" + p.dataset.usd;
+    });
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("light");
+  }
+
+  function sendWhatsApp(service, price) {
+    const phoneNumber = "916306799173";
+    const message =
+      `Hello Abhijeet 👋%0A%0A` +
+      `I came across your portfolio and I’m interested in your ${service} service.%0A%0A` +
+      `📦 Selected Package: ${service}%0A` +
+      `💰 Quoted Price: ₹${price}%0A%0A` +
+      `I’d like to discuss my requirements and understand the next steps.%0A` +
+      `Looking forward to your response.`;
+
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  }
+</script>
+
+</body>
+</html>
