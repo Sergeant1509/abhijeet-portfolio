@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience | Abhijeet</title>
 
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#ef4444">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -34,6 +42,7 @@
     body {
       background: var(--bg);
       color: var(--text);
+      padding-top: 72px;
       transition: 0.3s;
     }
 
@@ -42,6 +51,7 @@
       position: fixed;
       top: 0;
       width: 100%;
+      height: 72px;
       z-index: 1000;
       display: flex;
       justify-content: space-between;
@@ -71,14 +81,63 @@
       cursor: pointer;
     }
 
-    .theme-toggle:hover {
-      background: var(--accent);
-      color: #fff;
+    /* HAMBURGER */
+    .menu-btn {
+      display: none;
+      font-size: 1.6rem;
+      color: var(--accent);
+      cursor: pointer;
+      margin-left: 15px;
+    }
+
+    /* DRAWER */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100vh;
+      background: var(--bg);
+      padding: 80px 30px;
+      transition: 0.4s ease;
+      z-index: 2000;
+    }
+
+    .drawer.active {
+      right: 0;
+    }
+
+    .drawer a {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .drawer a:hover {
+      color: var(--accent);
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 1500;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* EXPERIENCE SECTION */
     .experience {
-      padding: 140px 8% 100px;
+      padding: 80px 8% 100px;
       max-width: 1200px;
       margin: auto;
       perspective: 1200px;
@@ -101,32 +160,29 @@
       line-height: 1.6;
     }
 
-    /* EXPERIENCE GRID */
     .exp-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
     }
 
-    /* 3D CARD */
     .exp-card {
       background: var(--card-bg);
       border: 1px solid rgba(239,68,68,0.35);
       border-radius: 20px;
       padding: 30px;
-      transform-style: preserve-3d;
       transform: translateY(60px) rotateX(8deg);
       opacity: 0;
-      transition: transform 0.8s ease, opacity 0.8s ease;
+      transition: 0.8s;
     }
 
     .exp-card.show {
-      transform: translateY(0) rotateX(0deg);
+      transform: translateY(0) rotateX(0);
       opacity: 1;
     }
 
     .exp-card:hover {
-      transform: translateY(-10px) rotateX(4deg);
+      transform: translateY(-10px);
       box-shadow: 0 30px 60px rgba(239,68,68,0.35);
     }
 
@@ -134,11 +190,6 @@
       font-size: 2.2rem;
       color: var(--accent);
       margin-bottom: 15px;
-    }
-
-    .exp-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 6px;
     }
 
     .role {
@@ -160,6 +211,10 @@
         display: none;
       }
 
+      .menu-btn {
+        display: block;
+      }
+
       .experience h1 {
         font-size: 2.3rem;
       }
@@ -169,9 +224,9 @@
 
 <body>
 
-<!-- HEADER -->
 <header>
   <img src="/hero.png" width="90" alt="logo">
+
   <nav>
     <a href="/index.html">Home</a>
     <a href="/services.html">Services</a>
@@ -180,12 +235,27 @@
     <a href="/experience.html" class="active">Experience</a>
     <a href="/contact.html">Contact</a>
   </nav>
-  <button id="themeToggle" class="theme-toggle">
-    <i class="fa-solid fa-moon"></i>
-  </button>
+
+  <div>
+    <button id="themeToggle" class="theme-toggle">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <i class="fa-solid fa-bars menu-btn" onclick="toggleDrawer()"></i>
+  </div>
 </header>
 
-<!-- EXPERIENCE -->
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <a href="/index.html">Home</a>
+  <a href="/services.html">Services</a>
+  <a href="/skills.html">Skills</a>
+  <a href="/education.html">Education</a>
+  <a href="/experience.html">Experience</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
 <section class="experience">
   <h1>My <span>Experience</span></h1>
   <p class="subtitle">
@@ -199,8 +269,8 @@
       <h3>Self-Taught Developer</h3>
       <span class="role">Web & App Development</span>
       <p>
-        Built multiple portfolio websites, service pages, and UI components using
-        HTML, CSS, JavaScript, and Flutter while learning best practices.
+        Built portfolio websites, service pages, and UI components using HTML, CSS,
+        JavaScript, and Flutter while learning best practices.
       </p>
     </div>
 
@@ -209,8 +279,8 @@
       <h3>Project-Based Learning</h3>
       <span class="role">Hands-On Development</span>
       <p>
-        Developed real projects including portfolio systems, pricing pages,
-        UI animations, and responsive layouts with performance focus.
+        Developed real projects including pricing pages, UI animations,
+        and responsive layouts with performance focus.
       </p>
     </div>
 
@@ -220,7 +290,7 @@
       <span class="role">Concepts & Prototypes</span>
       <p>
         Explored AI agents, automation ideas, chatbots, and system-level thinking
-        with interest in vision-based and context-aware AI.
+        with interest in intelligent systems.
       </p>
     </div>
 
@@ -230,40 +300,26 @@
       <span class="role">Builder Mentality</span>
       <p>
         Worked on product ideas, service pricing models, and MVP thinking
-        with focus on execution, scalability, and real-world usability.
+        with focus on execution and scalability.
       </p>
     </div>
 
   </div>
 </section>
 
-<!-- SCRIPT -->
 <script>
-  /* THEME TOGGLE */
-  const toggle = document.getElementById("themeToggle");
-  const icon = toggle.querySelector("i");
-
-  if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light");
-    icon.classList.replace("fa-moon", "fa-sun");
+  function toggleDrawer() {
+    document.getElementById("drawer").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
   }
 
-  toggle.onclick = () => {
-    document.body.classList.toggle("light");
-    const light = document.body.classList.contains("light");
-    localStorage.setItem("theme", light ? "light" : "dark");
-    icon.classList.toggle("fa-moon");
-    icon.classList.toggle("fa-sun");
-  };
+  const toggle = document.getElementById("themeToggle");
+  toggle.onclick = () => document.body.classList.toggle("light");
 
-  /* SCROLL REVEAL */
   const cards = document.querySelectorAll(".reveal");
-
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
+      if (entry.isIntersecting) entry.target.classList.add("show");
     });
   }, { threshold: 0.2 });
 
