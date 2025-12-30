@@ -5,7 +5,7 @@ A modern, responsive, and animated personal portfolio website built to showcase 
 ---
 
 ## 🔴 Live Preview
-👉 abhijeet-portfolio-beta.vercel.app
+👉 https://abhijeet-portfolio-beta.vercel.app
 
 ---
 
