@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Abhijeet</title>
 
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#ef4444">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -34,6 +42,7 @@
     body {
       background: var(--bg);
       color: var(--text);
+      padding-top: 72px;
       transition: 0.3s;
     }
 
@@ -42,6 +51,7 @@
       position: fixed;
       top: 0;
       width: 100%;
+      height: 72px;
       z-index: 1000;
       display: flex;
       justify-content: space-between;
@@ -71,14 +81,63 @@
       cursor: pointer;
     }
 
-    .theme-toggle:hover {
-      background: var(--accent);
-      color: #fff;
+    /* HAMBURGER */
+    .menu-btn {
+      display: none;
+      font-size: 1.6rem;
+      color: var(--accent);
+      cursor: pointer;
+      margin-left: 15px;
+    }
+
+    /* DRAWER */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100vh;
+      background: var(--bg);
+      padding: 80px 30px;
+      transition: 0.4s ease;
+      z-index: 2000;
+    }
+
+    .drawer.active {
+      right: 0;
+    }
+
+    .drawer a {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .drawer a:hover {
+      color: var(--accent);
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 1500;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* CONTACT SECTION */
     .contact {
-      padding: 140px 8% 100px;
+      padding: 80px 8% 100px;
       max-width: 1200px;
       margin: auto;
       perspective: 1200px;
@@ -101,14 +160,12 @@
       line-height: 1.6;
     }
 
-    /* GRID */
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
     }
 
-    /* 3D CARD */
     .contact-card {
       background: var(--card-bg);
       border: 1px solid rgba(239,68,68,0.35);
@@ -124,16 +181,6 @@
       opacity: 1;
     }
 
-    .contact-card:hover {
-      transform: translateY(-8px) rotateX(4deg);
-      box-shadow: 0 30px 60px rgba(239,68,68,0.35);
-    }
-
-    .contact-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-
     .contact-links a {
       display: flex;
       align-items: center;
@@ -141,20 +188,12 @@
       color: var(--muted);
       text-decoration: none;
       margin-bottom: 16px;
-      transition: 0.3s;
     }
 
     .contact-links a i {
-      font-size: 1.3rem;
       color: var(--accent);
     }
 
-    .contact-links a:hover {
-      color: var(--accent);
-      transform: translateX(4px);
-    }
-
-    /* FORM */
     form input,
     form textarea {
       width: 100%;
@@ -164,17 +203,6 @@
       border: 1px solid rgba(239,68,68,0.4);
       border-radius: 8px;
       color: var(--text);
-      outline: none;
-    }
-
-    body.light form input,
-    body.light form textarea {
-      color: #111;
-    }
-
-    form textarea {
-      resize: none;
-      height: 120px;
     }
 
     form button {
@@ -184,19 +212,17 @@
       color: white;
       border: none;
       border-radius: 30px;
-      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
-    }
-
-    form button:hover {
-      background: #dc2626;
     }
 
     /* MOBILE */
     @media (max-width: 900px) {
       nav {
         display: none;
+      }
+
+      .menu-btn {
+        display: block;
       }
 
       .contact h1 {
@@ -208,9 +234,9 @@
 
 <body>
 
-<!-- HEADER -->
 <header>
   <img src="/hero.png" width="90" alt="logo">
+
   <nav>
     <a href="/index.html">Home</a>
     <a href="/services.html">Services</a>
@@ -219,12 +245,27 @@
     <a href="/experience.html">Experience</a>
     <a href="/contact.html" class="active">Contact</a>
   </nav>
-  <button id="themeToggle" class="theme-toggle">
-    <i class="fa-solid fa-moon"></i>
-  </button>
+
+  <div>
+    <button id="themeToggle" class="theme-toggle">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <i class="fa-solid fa-bars menu-btn" onclick="toggleDrawer()"></i>
+  </div>
 </header>
 
-<!-- CONTACT -->
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <a href="/index.html">Home</a>
+  <a href="/services.html">Services</a>
+  <a href="/skills.html">Skills</a>
+  <a href="/education.html">Education</a>
+  <a href="/experience.html">Experience</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
 <section class="contact">
   <h1>Get In <span>Touch</span></h1>
   <p class="subtitle">
@@ -233,31 +274,16 @@
   </p>
 
   <div class="contact-grid">
-
-    <!-- CONTACT INFO -->
     <div class="contact-card reveal">
       <h3>Contact Details</h3>
       <div class="contact-links">
-        <a href="mailto:abhijeet.gautam1509@gmail.com">
-          <i class="fa-solid fa-envelope"></i>
-          abhijeet.gautam1509@gmail.com
-        </a>
-        <a href="https://wa.me/916306799173" target="_blank">
-          <i class="fa-brands fa-whatsapp"></i>
-          WhatsApp Chat
-        </a>
-        <a href="https://www.linkedin.com/in/Sergeant1509" target="_blank">
-          <i class="fa-brands fa-linkedin"></i>
-          LinkedIn Profile
-        </a>
-        <a href="https://github.com/Sergeant1509" target="_blank">
-          <i class="fa-brands fa-github"></i>
-          GitHub Profile
-        </a>
+        <a href="mailto:abhijeet.gautam1509@gmail.com"><i class="fa-solid fa-envelope"></i>Email</a>
+        <a href="https://wa.me/916306799173" target="_blank"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a>
+        <a href="https://www.linkedin.com/in/Sergeant1509" target="_blank"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>
+        <a href="https://github.com/Sergeant1509" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
       </div>
     </div>
 
-    <!-- CONTACT FORM -->
     <div class="contact-card reveal">
       <h3>Send a Message</h3>
       <form onsubmit="event.preventDefault(); alert('Message submitted (demo).');">
@@ -267,40 +293,24 @@
         <button type="submit">Send Message</button>
       </form>
     </div>
-
   </div>
 </section>
 
-<!-- SCRIPT -->
 <script>
-  /* THEME TOGGLE */
-  const toggle = document.getElementById("themeToggle");
-  const icon = toggle.querySelector("i");
-
-  if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light");
-    icon.classList.replace("fa-moon", "fa-sun");
+  function toggleDrawer() {
+    document.getElementById("drawer").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
   }
 
-  toggle.onclick = () => {
-    document.body.classList.toggle("light");
-    const light = document.body.classList.contains("light");
-    localStorage.setItem("theme", light ? "light" : "dark");
-    icon.classList.toggle("fa-moon");
-    icon.classList.toggle("fa-sun");
-  };
+  const toggle = document.getElementById("themeToggle");
+  toggle.onclick = () => document.body.classList.toggle("light");
 
-  /* SCROLL REVEAL */
   const cards = document.querySelectorAll(".reveal");
-
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
+      if (entry.isIntersecting) entry.target.classList.add("show");
     });
   }, { threshold: 0.2 });
-
   cards.forEach(card => observer.observe(card));
 </script>
 
